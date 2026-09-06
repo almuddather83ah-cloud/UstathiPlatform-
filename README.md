@@ -1,44 +1,34 @@
-# Backend — منصة أستاذي
+# منصة أستاذي التعليمية — Android + Backend
 
-REST API مبني بـ Node.js وSQLite، ومتوافق مع تطبيق Android المرفق.
+مشروع متكامل مبدئيًا لمنصة تعليمية عربية، يتكون من:
 
-## التشغيل
+1. تطبيق Android مبني بواجهة WebView وواجهة RTL.
+2. Backend REST API بـ Node.js.
+3. SQLite database.
+4. JWT authentication.
+5. حسابات الطلاب والمعلمين.
+6. لوحة تحكم للمعلم لإدارة الدورات والدروس والمواد والاختبارات والأسئلة والطلاب.
+7. رفع ملفات تعليمية محدود الحجم عبر API.
+
+## تشغيل Backend
 
 ```bash
+cd backend
 cp .env.example .env
 npm run seed
 npm start
 ```
 
-أو:
+## تشغيل Docker
 
 ```bash
 docker compose up -d --build
 ```
 
-## أهم المسارات
+## تشغيل Android
 
-- `POST /api/register` — تسجيل طالب
-- `POST /api/register/teacher` — تسجيل معلم برمز دعوة
-- `POST /api/login` — الدخول وإصدار JWT
-- `GET /api/courses` — قائمة الدورات
-- `GET /api/courses/:id` — تفاصيل الدورة
-- `POST/PUT/DELETE /api/courses/:id` — إدارة الدورة للمعلم
-- `POST/PUT/DELETE /api/lessons/:id` — إدارة الدروس
-- `POST/DELETE /api/materials/:id` — إدارة المواد
-- `POST/PUT/DELETE /api/quizzes/:id` — إدارة الاختبارات
-- `POST/DELETE /api/questions/:id` — إدارة الأسئلة
-- `GET /api/admin/overview` — إحصاءات الإدارة
-- `GET /api/students` — قائمة الطلاب
-- `POST /api/uploads` — رفع ملف Base64 محدود الحجم (PDF/MP4/WebM/MP3 وغيرها)
+افتح مجلد `android` في Android Studio، ثم اربط عنوان الـ API عند الحاجة عبر:
 
-## الأمان
+`?api=http://SERVER-IP:3000`
 
-- كلمات المرور لا تُخزّن كنص صريح؛ تستخدم `scrypt` مع salt.
-- نقاط إدارة المعلم محمية بـ JWT وصلاحية `teacher`.
-- المعلم لا يستطيع تعديل دورة معلم آخر.
-- قاعدة البيانات تستخدم foreign keys وWAL.
-
-## إعدادات البيئة
-
-راجع `.env.example`. في الإنتاج غيّر `JWT_SECRET` و`TEACHER_INVITE_CODE` و`PUBLIC_BASE_URL`.
+في المحاكي Android الافتراضي، القيمة الافتراضية هي `http://10.0.2.2:3000`.
